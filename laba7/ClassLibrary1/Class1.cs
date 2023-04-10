@@ -1,57 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace AntSimulation
+// Клас, що представляє мураху
+public class Ant
 {
-    public class Ant
+    public int X { get; set; } // Координата X
+    public int Y { get; set; } // Координата Y
+    public string Type { get; set; } // Тип мурахи
+
+    public void Move()
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public Ant(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public void Move()
-        {
-            
-            Console.WriteLine($"Мурашка рухається на координатах ({X}, {Y})");
-        }
+        Console.WriteLine($"Мураха типу {Type} рухається до ({X}, {Y})");
     }
+}
 
-    public class AntColony
+// Фабрика мурашок, яка використовує патерн "Легковаговик"
+public class AntFactory
+{
+    private Dictionary<string, Ant> ants = new Dictionary<string, Ant>();
+
+    public Ant GetAnt(string type)
     {
-        private Ant[] ants;
-        private Random random;
-
-        public AntColony(int size)
+        if (ants.ContainsKey(type))
         {
-            ants = new Ant[size];
-            random = new Random();
-            InitializeAnts();
+            return ants[type];
         }
-
-        private void InitializeAnts()
+        else
         {
-            
-           
-            for (int i = 0; i < ants.Length; i++)
+            Ant ant;
+            if (type == "тип1")
             {
-                int x = random.Next(0, 100); 
-                int y = random.Next(0, 100); 
-                ants[i] = new Ant(x, y);
+                ant = new Ant { Type = "тип1", X = 0, Y = 0 };
             }
-        }
-
-        public void Simulate()
-        {
-            
-            Console.WriteLine("Імітація руху мурашок в колонії");
-            foreach (var ant in ants)
+            else if (type == "тип2")
             {
-                ant.Move();
+                ant = new Ant { Type = "тип2", X = 10, Y = 5 };
             }
+            else
+            {
+                // Інші типи мурах можна додати за потреби
+                throw new ArgumentException("Невідомий тип мурахи");
+            }
+            ants.Add(type, ant);
+            return ant;
         }
     }
 }
+
+

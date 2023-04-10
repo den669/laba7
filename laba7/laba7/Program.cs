@@ -1,17 +1,23 @@
-﻿using System;
-
-namespace AntSimulation
+﻿class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            
-            AntColony colony = new AntColony(10); 
+        // Створення фабрики мурашок
+        AntFactory antFactory = new AntFactory();
 
-            colony.Simulate();
+        // Отримання мурах за допомогою фабрики
+        Ant ant1 = antFactory.GetAnt("тип1");
+        Ant ant2 = antFactory.GetAnt("тип2");
+        Ant ant3 = antFactory.GetAnt("тип1");
 
-            Console.WriteLine("Програма завершила роботу");
-        }
+        // Рух мурах
+        ant1.Move();
+        ant2.Move();
+        ant3.Move();
+
+        // Виведення результату:
+        // Мураха типу тип1 рухається до (0, 0)
+        // Мураха типу тип2 рухається до (10, 5)
+        // Мураха типу тип1 рухається до (0, 0)
     }
 }
